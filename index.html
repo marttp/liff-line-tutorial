@@ -57,9 +57,15 @@
     }
 
     async function scanCode() {
+      const result = await liff.scanCode()
+      document.getElementById("scanCode").append(result.value)
     }
 
     function openWindow() {
+      liff.openWindow({
+        url: "https://line.me",
+        external: true
+      })
     }
 
     async function getFriendship() {
@@ -88,7 +94,6 @@
     }
 
     function getContext() {
-
       document.getElementById("type").append(liff.getContext().type)
       // ViewType Full, Tall, Compact
       document.getElementById("viewType").append(liff.getContext().viewType)
