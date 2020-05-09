@@ -54,6 +54,9 @@
     }
 
     function closed() {
+      // สั่งให้ LIFF ปิดเอง
+      // สามารถช่วยในเคส revoke access token
+      liff.closeWindow()
     }
 
     async function scanCode() {
@@ -132,13 +135,18 @@
 
     async function main() {
       await liff.init({ liffId: "1654186894-YZB01aV6" })
-      getEnvironment()
-      getUserProfile()
-      // Context: ทำให้เราทราบที่มาที่ไปของ LIFF ตัวนี้ได้ว่ามาจากไหน
-      getContext()
-      // Detect ว่าเข่าเป็นเพื่อนกับ Chatbot รึยัง
-      getFriendship()
-      // createUniversalLink()
+      document.getElementById("isLoggedIn").append(liff.isLoggedIn())
+      if (liff.isLoggedIn()) {
+        getEnvironment()
+        getUserProfile()
+        // Context: ทำให้เราทราบที่มาที่ไปของ LIFF ตัวนี้ได้ว่ามาจากไหน
+        getContext()
+        // Detect ว่าเข่าเป็นเพื่อนกับ Chatbot รึยัง
+        getFriendship()
+        // createUniversalLink()
+      } else {
+        liff.login()
+      }
     }
     main()
   </script>
