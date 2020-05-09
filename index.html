@@ -69,6 +69,16 @@
     }
 
     function getContext() {
+
+      document.getElementById("type").append(liff.getContext().type)
+      // ViewType Full, Tall, Compact
+      document.getElementById("viewType").append(liff.getContext().viewType)
+      // u to u เปิด LIFF จาก 1-1 เท่านั้น
+      document.getElementById("utouId").append(liff.getContext().utouId)
+      // กด LIFF มาจาก Room ไหน
+      document.getElementById("roomId").append(liff.getContext().roomId)
+      // กด LIFF มาจาก Group ไหน
+      document.getElementById("groupId").append(liff.getContext().groupId)
     }
 
     async function getUserProfile() {
@@ -77,6 +87,7 @@
       document.getElementById("userId").append(profile.userId)
       document.getElementById("statusMessage").append(profile.statusMessage)
       document.getElementById("displayName").append(profile.displayName)
+      // ต้องไปเปิด OpenID
       document.getElementById("decodedIDToken").append(liff.getDecodedIDToken().email)
     }
 
@@ -98,8 +109,9 @@
     async function main() {
       await liff.init({ liffId: "1654186894-YZB01aV6" })
       getEnvironment()
-      // getUserProfile()
-      // getContext()
+      getUserProfile()
+      // Context: ทำให้เราทราบที่มาที่ไปของ LIFF ตัวนี้ได้ว่ามาจากไหน
+      getContext()
       // getFriendship()
       // createUniversalLink()
     }
