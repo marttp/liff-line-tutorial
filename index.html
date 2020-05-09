@@ -36,11 +36,11 @@
   <button id="btnLogOut" onclick="logOut()">Log Out</button>
   <button id="btnClose" onclick="closed()">Close</button>
 
-  <!-- <script src="js/vconsole.min.js"></script> -->
-  <!-- <script>
+  <script src="js/vconsole.min.js"></script>
+  <script>
     var vConsole = new VConsole()
     console.log("Hello World!")
-  </script> -->
+  </script>
 
   <script src="https://static.line-scdn.net/liff/edge/versions/2.1.13/sdk.js"></script>
   <script>
@@ -48,6 +48,13 @@
     }
 
     async function shareMsg() {
+      // เราสามารถส่ง Bubble ได้สูงสุด 5 ตัว
+      await liff.shareTargetPicker([
+        {
+          "type": "text",
+          "text": "This message was sent by ShareTargetPicker"
+        }
+      ])
     }
 
     function logOut() {
@@ -136,19 +143,21 @@
     }
 
     async function main() {
+      liff.ready.then(() => {
+        document.getElementById("isLoggedIn").append(liff.isLoggedIn())
+        if (liff.isLoggedIn()) {
+          getEnvironment()
+          getUserProfile()
+          // Context: ทำให้เราทราบที่มาที่ไปของ LIFF ตัวนี้ได้ว่ามาจากไหน
+          getContext()
+          // Detect ว่าเข่าเป็นเพื่อนกับ Chatbot รึยัง
+          getFriendship()
+          // createUniversalLink()
+        } else {
+          liff.login()
+        }
+      })
       await liff.init({ liffId: "1654186894-YZB01aV6" })
-      document.getElementById("isLoggedIn").append(liff.isLoggedIn())
-      if (liff.isLoggedIn()) {
-        getEnvironment()
-        getUserProfile()
-        // Context: ทำให้เราทราบที่มาที่ไปของ LIFF ตัวนี้ได้ว่ามาจากไหน
-        getContext()
-        // Detect ว่าเข่าเป็นเพื่อนกับ Chatbot รึยัง
-        getFriendship()
-        // createUniversalLink()
-      } else {
-        liff.login()
-      }
     }
     main()
   </script>
